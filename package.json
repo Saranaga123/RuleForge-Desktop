@@ -1,0 +1,70 @@
+{
+  "name": "ruleforge-desktop",
+  "version": "1.2.0",
+  "description": "RuleForge Lab - desktop rules test bench with embedded RuleForge engine",
+  "author": "ASD",
+  "private": true,
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:frontend": "cd \"../RuleForge-Lab\" && npm run build",
+    "dist": "electron-builder",
+    "package": "npm run build:frontend && npm run dist"
+  },
+  "devDependencies": {
+    "electron": "^27.3.11",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "com.ruleforge.lab",
+    "productName": "RuleForge Lab",
+    "directories": {
+      "output": "release"
+    },
+    "copyright": "Copyright © 2026 ASD",
+    "files": [
+      "main.js",
+      "package.json",
+      "build/icon.ico"
+    ],
+    "extraResources": [
+      {
+        "from": "../RuleForge",
+        "to": "RuleForge",
+        "filter": [
+          "**/*",
+          "!rules/**/*.bak",
+          "!node_modules{,/**/*}",
+          "!api{,/**/*}",
+          "!Picture1.png"
+        ]
+      },
+      {
+        "from": "../RuleForge/node_modules",
+        "to": "RuleForge/node_modules"
+      },
+      {
+        "from": "../RuleForge-Lab/dist/ruleforge",
+        "to": "frontend-dist"
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico",
+      "artifactName": "RuleForge-Lab-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico",
+      "installerSidebar": "build/installerSidebar.bmp",
+      "uninstallerSidebar": "build/installerSidebar.bmp",
+      "shortcutName": "RuleForge Lab",
+      "uninstallDisplayName": "RuleForge Lab ${version}",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}
